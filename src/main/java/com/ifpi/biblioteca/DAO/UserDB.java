@@ -44,6 +44,7 @@ public class UserDB {
                 String matricula = rs.getString("matricula");
 
                 //e os exibe no terminal
+                System.out.println("\n------------------------------");
                 System.out.println("Nome: " + nome);
                 System.out.println("E-mail: " + email);
                 System.out.println("Matrícula: " + matricula);

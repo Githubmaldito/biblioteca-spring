@@ -25,12 +25,12 @@ public class LivroDB {
         }
     }
 
-    public void removerLivro(){
+    public void removerLivro(String isbn){
         String sql = "DELETE FROM LIVROS WHERE ISBN = ?";
         PreparedStatement ps = null;
         try {
             ps = Conexao.getConexao().prepareStatement(sql);
-            ps.setString(1, "ISBN");
+            ps.setString(1,  isbn);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,10 +44,12 @@ public class LivroDB {
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
+                System.out.println("\n---------------------------------");
                 System.out.println("Autor: " + rs.getString("AUTOR"));
                 System.out.println("Titulo: " + rs.getString("TITULO"));
                 System.out.println("ISBN: " + rs.getString("ISBN"));
                 System.out.println("Emprestimo: " + rs.getBoolean("EMPRESTIMO"));
+                System.out.println("------------------------------------");
             }
             
         } catch (Exception e) {

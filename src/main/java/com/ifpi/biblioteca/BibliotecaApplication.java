@@ -137,12 +137,12 @@ public class BibliotecaApplication {
 
                 case 8:
                     // caso a opção seja 8 - remover livro
-                    System.out.print("Digite o título do livro para remover: \n");
+                    System.out.print("Digite o ISBN do livro para remover: \n");
                     // o usuário digita o título do livro
-                    String tituloRemocao = scanner.nextLine();
+                    String idRemocao = scanner.nextLine();
                     //como a função de remover livro tem como parametro um objeto do tipo livro,
                     //é criado um objeto do tipo livro com o título digitado
-                    Livro livroRemocao = new Livro(tituloRemocao, null, false, null);
+                    new LivroDB().removerLivro(idRemocao);
                     // new LivroDB().removerLivro(livroRemocao); 
                     
                 case 9:
