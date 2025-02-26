@@ -2,6 +2,8 @@ package com.ifpi.biblioteca;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.sql.Date;
 import java.util.Scanner;
 import com.ifpi.biblioteca.DAO.LivroDB;
 import com.ifpi.biblioteca.DAO.UserDB;
@@ -101,12 +103,15 @@ public class BibliotecaApplication {
                     String tituloEmprestimo = scanner.nextLine();
                     System.out.print("Digite a matrícula do usuário para emprestar o livro: \n");
                     // o usuário digita a matrícula do usuário
-                    String tituloUsuario = scanner.nextLine();
-                    //a função emprestar livro da classe Alexandria é executada
-                    // historico.emprestarLivro(tituloEmprestimo, tituloUsuario);
+                    String matriculaUsuario = scanner.nextLine();
+                    //a data de empréstimo é adicionada automaticamente
+                    Date dataEmprestimo = new Date(System.currentTimeMillis());
+                    //isso converte a dataq qe tinha milissegundos para uma data normal
+                    dataEmprestimo = Date.valueOf(dataEmprestimo.toLocalDate());
+                    // a função emprestar livro da classe Alexandria é executada
+                    // historico.emprestarLivro(tituloEmprestimo, matriculaUsuario, dataEmprestimo);
 
-                    
-                    new LivroDB().emprestarLivro(tituloEmprestimo, tituloUsuario);
+                    new LivroDB().emprestarLivro(tituloEmprestimo, matriculaUsuario, dataEmprestimo);
                     // finaliza o case
 
                     break;

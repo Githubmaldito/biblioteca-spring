@@ -7,14 +7,7 @@ public class Livro {
     String autor;
     boolean emprestimo;
 
-    public Livro(String isbn, String titulo, String autor) {
-        this.isbn = isbn;
-        this.titulo = titulo;
-        this.autor = autor;
-    }
-
     
-
     public Livro( String titulo, String autor, boolean emprestimo, String isbn) {
         this.isbn = isbn;
         this.titulo = titulo;
@@ -24,39 +17,25 @@ public class Livro {
 
     public String getIsbn() {
         return this.isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
+    }public void setIsbn(String isbn) {
+        this.isbn = isbn;}
 
     public String getTitulo() {
         return this.titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
+    }public void setTitulo(String titulo) {
+        this.titulo = titulo;}
 
     public String getAutor() {
         return this.autor;
-    }
-
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
+    }public void setAutor(String autor) {
+        this.autor = autor;}
 
     public boolean isEmprestimo() {
         return this.emprestimo;
-    }
-
-    public boolean getEmprestimo() {
+    }public boolean getEmprestimo() {
         return this.emprestimo;
-    }
-
-    public void setEmprestimo(boolean emprestimo) {
-        this.emprestimo = emprestimo;
-    }
+    }public void setEmprestimo(boolean emprestimo) {
+        this.emprestimo = emprestimo;}
 
     @Override
     public boolean equals(Object o) {

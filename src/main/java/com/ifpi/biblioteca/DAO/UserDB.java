@@ -66,10 +66,14 @@ public class UserDB {
                 System.out.println("\n---Empréstimos do usuário:---");
                 while (rs.next()) {
                     String titulo = rs.getString("titulo_livro");
-                    String matriculaUsuario = rs.getString("matricula_usuario");
+                    String dataEmprestimo = rs.getString("data_emprestimo");
 
                     System.out.println("Título: " + titulo);
-                    System.out.println("Matrícula: " + matriculaUsuario);
+                    // Formata a data de empréstimo para o formato dd/MM/yyyy
+                    String dataFormatada = dataEmprestimo.split(" ")[0];
+                    String[] dataPartes = dataFormatada.split("-");
+                    String dataFinal = dataPartes[2] + "/" + dataPartes[1] + "/" + dataPartes[0];
+                    System.out.println("Data do empréstimo: " + dataFinal);
                     System.out.println("-----------------------------");
                 }
                 

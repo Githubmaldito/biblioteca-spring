@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class LivroDB {
     public void cadastrarLivro(Livro livro){
@@ -26,7 +27,7 @@ public class LivroDB {
     }
 
     public void removerLivro(String isbn){
-        String sql = "DELETE FROM LIVROS WHERE ISBN = ?";
+        String sql = "DELETE FROM LIVROS WHERE ISBN = ? AND EMPRESTIMO = 1";
         PreparedStatement ps = null;
         try {
             ps = Conexao.getConexao().prepareStatement(sql);
@@ -34,6 +35,7 @@ public class LivroDB {
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("Ocorreu um erro ao remover o livro", e);
         }
     }
 
@@ -56,15 +58,17 @@ public class LivroDB {
             e.printStackTrace();
         }
     }
-    public void emprestarLivro(String titulo, String matricula){
-        String sql = "INSERT INTO EMPRESTIMOS (TITULO_LIVRO, MATRICULA_USUARIO) VALUES (?, ?)";
+    public void emprestarLivro(String titulo, String matricula, Date dataEmprestimo){
+        String sql = "INSERT INTO EMPRESTIMOS (TITULO_LIVRO, MATRICULA_USUARIO, DATA_EMPRESTIMO) VALUES (?, ?, ?)";
         String sql2 = "UPDATE LIVROS SET EMPRESTIMO = ? WHERE TITULO = ?";
+        String sql3 = "INSERT INTO EMPRESTIMOS SET DATA_EMPRESTIMO = STR_TO_DATE(?, '%d/%m/%Y')";
 
         PreparedStatement ps = null;
         try {
             ps = Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, titulo);
             ps.setString(2, matricula);
+            ps.setDate(3, new java.sql.Date(dataEmprestimo.getTime()));
             ps.execute();
 
             ps = Conexao.getConexao().prepareStatement(sql2);
@@ -72,6 +76,8 @@ public class LivroDB {
             ps.setString(2, titulo);
             ps.execute();
 
+            ps = Conexao.getConexao().prepareStatement(sql3);
+            ps.setString(1, dataEmprestimo.toString());
         } catch (Exception e) { 
             e.printStackTrace();
         }
