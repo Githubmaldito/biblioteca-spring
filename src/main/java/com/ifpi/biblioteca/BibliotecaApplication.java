@@ -1,5 +1,6 @@
 package com.ifpi.biblioteca;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,11 +10,15 @@ import com.ifpi.biblioteca.DAO.LivroDB;
 import com.ifpi.biblioteca.DAO.UserDB;
 import com.ifpi.biblioteca.entidades.Livro;
 import com.ifpi.biblioteca.entidades.Usuario;
+import com.ifpi.biblioteca.services.EmailService;
 
 @SpringBootApplication
 public class BibliotecaApplication {
 
-	public static void main(String[] args) {
+    @Autowired
+    private EmailService emailService;
+
+    public static void main(String[] args) {
 		SpringApplication.run(BibliotecaApplication.class, args);
 
 		Scanner scanner = new Scanner(System.in);
@@ -43,7 +48,7 @@ public class BibliotecaApplication {
                     // o usuario digita o título do livro
                     String titulo = scanner.nextLine();
                     System.out.print("Digite o autor do livro: ");
-                    // e o autor 
+                    // e o autor
                     String autor = scanner.nextLine();
 
                     System.err.println("Digite o ISBN do livro: ");
@@ -71,8 +76,10 @@ public class BibliotecaApplication {
                     String email = scanner.nextLine();
 
                     //historico.cadastrarUsuario(new Usuario(nome, email, matricula));
-
                     new UserDB().cadastrarUsuario(new Usuario(nome, email, matricula));
+
+                    BibliotecaApplication app = new BibliotecaApplication();
+                    app.emailService.enviarEmailTexto(nome, "Cadastro realizado com sucesso", "Olá, seu cadastro foi realizado com sucesso");
                     
                     break;
 
@@ -125,7 +132,7 @@ public class BibliotecaApplication {
                         // historico.historicoEmprestimos(matriculaHistorico);
                         // e o histórico de empréstimos do usuário é exibido
                         
-                        new UserDB().historicoEmprestimos(matriculaHistorico);
+                        new UserDB().historicoEmprestimos(matriculaHistorico); 
                         // finaliza o case
                         break;
                 case 7:

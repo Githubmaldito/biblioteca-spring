@@ -78,7 +78,7 @@ public class LivroDB {
 
             ps = Conexao.getConexao().prepareStatement(sql3);
             ps.setString(1, dataEmprestimo.toString());
-        } catch (Exception e) { 
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -98,7 +98,7 @@ public class LivroDB {
             ps.setString(1, titulo);
             ps.execute();
 
-        } catch (SQLException e) {
+        } catch (SQLException e){
             e.printStackTrace();
         }
     }

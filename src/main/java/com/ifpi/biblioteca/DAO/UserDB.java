@@ -6,11 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.function.ToDoubleBiFunction;
 import com.ifpi.biblioteca.conexao.Conexao;
 import com.ifpi.biblioteca.entidades.Usuario;
 
 public class UserDB {
+    
     public void cadastrarUsuario(Usuario usuario){
         String sql = "INSERT INTO USUARIOS (NOME, MATRICULA, EMAIL) VALUES (?, ?, ?)";
 
@@ -25,6 +26,8 @@ public class UserDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        
     }
 
     public void listarUsuarios() {
