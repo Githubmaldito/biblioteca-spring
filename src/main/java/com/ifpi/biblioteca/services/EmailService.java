@@ -19,25 +19,20 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
     @Autowired
-    private JavaMailSender javaMailSender;
-
-    @Value("${spring.mail.username}")
-    private String remetente;
+    private final JavaMailSender javaMailSender;
 
 
-    public String enviarEmailTexto(String destinatario, String assunto, String mensagem) {
-        //implementação do envio de email
-        try{
-            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-            simpleMailMessage.setFrom(remetente);
-            simpleMailMessage.setTo(destinatario);
-            simpleMailMessage.setSubject(assunto);
-            simpleMailMessage.setText(mensagem);
-            javaMailSender.send(simpleMailMessage);
-            return "Email enviado com sucesso";
-        } catch (Exception e){
-            return "Erro ao enviar Email " + e.getLocalizedMessage();
-        }
+    public EmailService(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
+
+    public void sendEmail(Email email){
+        var message = new SimpleMailMessage();
+        message.setFrom("noreply@email.com")
+        message.setText(email.body());
+        message.setTo(email.to());
+        message.setSubject(email.subject());
+        javaMailSender.send(message);
     }
 
 }
