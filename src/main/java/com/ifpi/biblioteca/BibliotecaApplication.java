@@ -11,12 +11,16 @@ import com.ifpi.biblioteca.DAO.UserDB;
 import com.ifpi.biblioteca.entidades.Livro;
 import com.ifpi.biblioteca.entidades.Usuario;
 import com.ifpi.biblioteca.services.EmailService;
+import com.ifpi.biblioteca.services.Email;
 
 @SpringBootApplication
 public class BibliotecaApplication {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private UserDB userDB;
 
     public static void main(String[] args) {
 		SpringApplication.run(BibliotecaApplication.class, args);
@@ -79,7 +83,6 @@ public class BibliotecaApplication {
                     new UserDB().cadastrarUsuario(new Usuario(nome, email, matricula));
 
                     BibliotecaApplication app = new BibliotecaApplication();
-                    app.emailService.enviarEmailTexto(nome, "Cadastro realizado com sucesso", "Olá, seu cadastro foi realizado com sucesso");
                     
                     break;
 
@@ -135,6 +138,7 @@ public class BibliotecaApplication {
                         new UserDB().historicoEmprestimos(matriculaHistorico); 
                         // finaliza o case
                         break;
+                        
                 case 7:
                     // caso a opção seja 7 - devolver livro
                     System.out.print("Digite o título do livro para devolver: \n");

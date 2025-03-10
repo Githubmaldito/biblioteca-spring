@@ -7,28 +7,61 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.function.ToDoubleBiFunction;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.ifpi.biblioteca.conexao.Conexao;
 import com.ifpi.biblioteca.entidades.Usuario;
+import com.ifpi.biblioteca.services.EmailService;
 
+@Repository
 public class UserDB {
     
-    public void cadastrarUsuario(Usuario usuario){
+    // public void cadastrarUsuario(Usuario usuario){
+    //     String sql = "INSERT INTO USUARIOS (NOME, MATRICULA, EMAIL) VALUES (?, ?, ?)";
+
+    //     PreparedStatement ps = null;
+    //     try {
+    //         ps = Conexao.getConexao().prepareStatement(sql);
+    //         ps.setString(1, usuario.getNome());
+    //         ps.setString(2, usuario.getMatricula());
+    //         ps.setString(3, usuario.getEmail());
+    //         ps.execute();
+
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+
+        
+    // }
+
+     @Autowired
+    private EmailService emailService;
+
+    public void cadastrarUsuario(Usuario usuario) {
         String sql = "INSERT INTO USUARIOS (NOME, MATRICULA, EMAIL) VALUES (?, ?, ?)";
 
-        PreparedStatement ps = null;
-        try {
-            ps = Conexao.getConexao().prepareStatement(sql);
+        try (Connection conn = Conexao.getConexao();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, usuario.getNome());
             ps.setString(2, usuario.getMatricula());
             ps.setString(3, usuario.getEmail());
             ps.execute();
 
+            // Envia um e-mail de confirmação
+            String destinatario = usuario.getEmail();
+            String assunto = "Bem-vindo à Biblioteca!";
+            String mensagem = "Olá " + usuario.getNome() + ",\n\nSeu cadastro foi realizado com sucesso!";
+
+            emailService.enviarEmail(destinatario, assunto, mensagem);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        
     }
+
 
     public void listarUsuarios() {
         // Obtém a conexão com o banco de dados usando a classe Conexao
