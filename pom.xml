@@ -29,7 +29,36 @@
 	<properties>
 		<java.version>21</java.version>
 	</properties>
+
+		<repositories>
+    <repository>
+        <id>eclipse-angus</id>
+        <url>https://repo.eclipse.org/content/repositories/angus-releases/</url>
+    </repository>
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+		<repository>
+			<id>eclipse-angus-releases</id>
+			<url>https://repo.eclipse.org/content/repositories/angus-releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
+<dependency>
+    <groupId>jakarta.servlet</groupId>
+    <artifactId>jakarta.servlet-api</artifactId>
+    <scope>provided</scope>
+</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -73,8 +102,21 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
 
+		<!-- Add your existing dependencies here -->
+<dependency>
+    <groupId>com.sun.mail</groupId>
+    <artifactId>javax.mail</artifactId>
+    <version>1.6.2</version>
+</dependency>
+
+		<dependency>
+        <groupId>org.eclipse.angus</groupId>
+        <artifactId>jakarta.mail</artifactId>
+    </dependency>
+
+	</dependencies>
+	
 	<build>
 		<plugins>
 			<plugin>

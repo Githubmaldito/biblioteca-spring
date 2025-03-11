@@ -10,14 +10,10 @@ import com.ifpi.biblioteca.DAO.LivroDB;
 import com.ifpi.biblioteca.DAO.UserDB;
 import com.ifpi.biblioteca.entidades.Livro;
 import com.ifpi.biblioteca.entidades.Usuario;
-import com.ifpi.biblioteca.services.EmailService;
-import com.ifpi.biblioteca.services.Email;
 
 @SpringBootApplication
 public class BibliotecaApplication {
 
-    @Autowired
-    private EmailService emailService;
 
     @Autowired
     private UserDB userDB;
@@ -81,8 +77,7 @@ public class BibliotecaApplication {
 
                     //historico.cadastrarUsuario(new Usuario(nome, email, matricula));
                     new UserDB().cadastrarUsuario(new Usuario(nome, email, matricula));
-
-                    BibliotecaApplication app = new BibliotecaApplication();
+                    
                     
                     break;
 

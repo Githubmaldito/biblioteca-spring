@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ifpi.biblioteca.conexao.Conexao;
+import com.ifpi.biblioteca.entidades.EmailUtil;
 import com.ifpi.biblioteca.entidades.Usuario;
-import com.ifpi.biblioteca.services.EmailService;
 
 @Repository
 public class UserDB {
@@ -36,27 +36,37 @@ public class UserDB {
         
     // }
 
-     @Autowired
-    private EmailService emailService;
-
     public void cadastrarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO USUARIOS (NOME, MATRICULA, EMAIL) VALUES (?, ?, ?)";
+        //String sql = "INSERT INTO USUARIOS (NOME, MATRICULA, EMAIL) VALUES (?, ?, ?)";
+
+        // try (Connection conn = Conexao.getConexao();
+        //      PreparedStatement ps = conn.prepareStatement(sql)) {
+
+        //     ps.setString(1, usuario.getNome());
+        //     ps.setString(2, usuario.getMatricula());
+        //     ps.setString(3, usuario.getEmail());
+        //     ps.execute();
+        String sql = "INSERT INTO usuarios (nome, email, matricula) VALUES (?, ?, ?)";
 
         try (Connection conn = Conexao.getConexao();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            ps.setString(1, usuario.getNome());
-            ps.setString(2, usuario.getMatricula());
-            ps.setString(3, usuario.getEmail());
-            ps.execute();
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getEmail());
+            stmt.setString(3, usuario.getMatricula());
+            stmt.executeUpdate();
+
+            System.out.println("Usuário cadastrado com sucesso!");
 
             // Envia um e-mail de confirmação
-            String destinatario = usuario.getEmail();
-            String assunto = "Bem-vindo à Biblioteca!";
-            String mensagem = "Olá " + usuario.getNome() + ",\n\nSeu cadastro foi realizado com sucesso!";
+            String assunto = "Bem-vindo ao Sistema de Biblioteca";
+            String corpo = "Olá, " + usuario.getNome() + "!\n\n"
+                    + "Seu cadastro foi realizado com sucesso.\n"
+                    + "Agradecemos por se juntar a nós!\n\n"
+                    + "Atenciosamente,\nEquipe da Biblioteca";
 
-            emailService.enviarEmail(destinatario, assunto, mensagem);
-
+            EmailUtil.enviarEmail(usuario.getEmail(), assunto, corpo);
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
