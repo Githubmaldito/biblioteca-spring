@@ -50,7 +50,7 @@ public class UserDB {
 
         try (Connection conn = Conexao.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+                
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getEmail());
             stmt.setString(3, usuario.getMatricula());
@@ -58,7 +58,8 @@ public class UserDB {
 
             System.out.println("Usuário cadastrado com sucesso!");
 
-            // Envia um e-mail de confirmação
+            //envia um e-mail de confirmação 
+            //deve ser um endereço de email válido 
             String assunto = "Bem-vindo ao Sistema de Biblioteca";
             String corpo = "Olá, " + usuario.getNome() + "!\n\n"
                     + "Seu cadastro foi realizado com sucesso.\n"
@@ -72,6 +73,36 @@ public class UserDB {
         }
     }
 
+    public void deletarUsuario(String matricula) {
+        String sql = "DELETE FROM USUARIOS WHERE MATRICULA = ?";
+        String nomeUsuario = "";
+
+        try (Connection conn = Conexao.getConexao();
+             PreparedStatement ps = conn.prepareStatement("SELECT NOME FROM USUARIOS WHERE MATRICULA = ?")) {
+
+            ps.setString(1, matricula);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    nomeUsuario = rs.getString("nome");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try (Connection conn = Conexao.getConexao();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, matricula);
+            ps.execute();
+
+            System.out.println("\nUsuário " + nomeUsuario + " deletado com sucesso!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void listarUsuarios() {
         // Obtém a conexão com o banco de dados usando a classe Conexao

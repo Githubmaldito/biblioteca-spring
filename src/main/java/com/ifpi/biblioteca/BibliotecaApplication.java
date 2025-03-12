@@ -35,7 +35,8 @@ public class BibliotecaApplication {
             System.out.println("6. Histório de empréstimos do usuário");
             System.out.println("7. Devolver livro");
             System.out.println("8. Remover livro");
-            System.out.println("9. Sair\n");
+            System.out.println("9. Remover usuário");
+            System.out.println("10. Sair\n");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -147,26 +148,38 @@ public class BibliotecaApplication {
                     break;
 
                 case 8:
-                    // caso a opção seja 8 - remover livro
+                    //caso a opção seja 8 - remover livro
                     System.out.print("Digite o ISBN do livro para remover: \n");
-                    // o usuário digita o título do livro
+                    //o usuário digita o título do livro
                     String idRemocao = scanner.nextLine();
                     //como a função de remover livro tem como parametro um objeto do tipo livro,
                     //é criado um objeto do tipo livro com o título digitado
                     new LivroDB().removerLivro(idRemocao);
                     // new LivroDB().removerLivro(livroRemocao); 
-                    
+                    break;
+
                 case 9:
-                    // caso o usuário escolha a opção 8 - sair
+                    //caso a opção seja 9 - remover usuário
+                    System.out.print("Digite a matrícula do usuário para remover: \n");
+                    //o usuário digita a matrícula do usuário
+                    String usuarioMatricula = scanner.nextLine();
+                    //a função remover usuário da classe Sabios é executada
+                    //historico.removerUsuario(matriculaRemocao);
+                    new UserDB().deletarUsuario(usuarioMatricula);
+                    // finaliza o case
+                    break;
+                    
+                case 10:
+                    //caso o usuário escolha a opção 10 - sair
                     System.out.println("Saindo...");
                     // é exibida uma mensagem de saída e o programa é finalizado
                     break;
                 default:
-                    // caso o usuário escolha uma opção diferente das anteriores
+                    //caso o usuário escolha uma opção diferente das anteriores
                     System.out.println("Opção inválida!");
             }
-            // o menu será exibido enquanto o usuário não escolher a opção de sair
-        } while (opcao != 9);
+            //o menu será exibido enquanto o usuário não escolher a opção de sair
+        } while (opcao != 10);
         // fecha o scanner
         scanner.close();
     }
