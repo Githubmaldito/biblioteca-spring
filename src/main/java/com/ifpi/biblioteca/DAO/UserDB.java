@@ -50,7 +50,7 @@ public class UserDB {
 
         try (Connection conn = Conexao.getConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-                
+
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getEmail());
             stmt.setString(3, usuario.getMatricula());
@@ -58,8 +58,8 @@ public class UserDB {
 
             System.out.println("Usuário cadastrado com sucesso!");
 
-            //envia um e-mail de confirmação 
-            //deve ser um endereço de email válido 
+            //envia um e-mail de confirmação
+            //deve ser um endereço de email válido
             String assunto = "Bem-vindo ao Sistema de Biblioteca";
             String corpo = "Olá, " + usuario.getNome() + "!\n\n"
                     + "Seu cadastro foi realizado com sucesso.\n"

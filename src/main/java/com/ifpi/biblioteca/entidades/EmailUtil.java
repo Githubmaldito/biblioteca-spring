@@ -7,12 +7,12 @@ import javax.mail.internet.*;
 public class EmailUtil {
 
     public static void enviarEmail(String destinatario, String assunto, String corpo) {
-        // Configurações do servidor SMTP
+        //configurações do servidor SMTP
         String host = "smtp.gmail.com"; // Substitua pelo host do seu provedor de e-mail
         String usuario = "blibliojava.spring@gmail.com"; // Seu e-mail
         String senha = "ffyw fwxi irzw uztq"; // Sua senha
 
-        // Propriedades para configurar a sessão
+        //propriedades para configurar a sessão
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -28,14 +28,14 @@ public class EmailUtil {
         });
 
         try {
-            // Cria a mensagem de e-mail
+            //cria a mensagem de e-mail
             Message mensagem = new MimeMessage(session);
             mensagem.setFrom(new InternetAddress(usuario));
             mensagem.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
             mensagem.setSubject(assunto);
             mensagem.setText(corpo);
 
-            // Envia o e-mail
+            //envia o e-mail
             Transport.send(mensagem);
 
             System.out.println("E-mail enviado com sucesso para: " + destinatario);
